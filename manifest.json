@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Nightcorer",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Nightcores YouTube videos on the fly.",
   "browser_action": {
       "default_icon": "nightcorer16.png",

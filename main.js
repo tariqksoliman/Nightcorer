@@ -58,9 +58,10 @@ function turnOnOff( on ) {
 }
 
 function changeSpeed( speed ) {
-
-    video.playbackRate = speed;
-    jungle.setPitchOffset( (speed - 1) * 2 );
+    if( nightcorerOnOff ) {
+        turnOff();
+        turnOn();
+    }
 }
 
 chrome.runtime.onMessage.addListener(

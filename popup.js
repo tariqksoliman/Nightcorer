@@ -28,6 +28,10 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             //Send the speed value when changed to content and update the indicator
             rangeSlider.addEventListener( 'input', function( e ) {
                 var newSpeed = this.value;
+                speedIndicator.value = parseFloat( newSpeed ).toFixed(2);
+            } );
+            rangeSlider.addEventListener( 'change', function( e ) {
+                var newSpeed = this.value;
                 
                 speedIndicator.value = parseFloat( newSpeed ).toFixed(2);
                 chrome.tabs.sendMessage(tabs[0].id, {nightcorerChangeSpeed: newSpeed}, function(response) {
