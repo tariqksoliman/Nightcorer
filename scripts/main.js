@@ -57,33 +57,39 @@ function turnOnOff( on ) {
     }
 }
 
-function changeSpeed( speed ) {
+//In case of many imemediate refreshes, only refresh on the last one
+//Just because it annoyed me otherwise
+var refreshTimeout;
+function timedRefresh() {
+    clearTimeout( refreshTimeout );
+    refreshTimeout = setTimeout( refresh, 1000 );
+}
+function refresh() {
     if( nightcorerOnOff ) {
         turnOff();
         turnOn();
     }
 }
 
+//Listen from the popup and background
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        
         if( request.nightcorerChangeSpeed ) {
             nightcorerSpeed = parseFloat( request.nightcorerChangeSpeed );
-            changeSpeed( nightcorerSpeed );
+            refresh();
         }
         else if( request.hasOwnProperty( 'nightcorerOnOff' ) ) {
             nightcorerOnOff = request.nightcorerOnOff;
             turnOnOff( nightcorerOnOff );
         }
+        else if( request.hasOwnProperty( 'refresh' ) ) {
+            if( request.refresh === true ) {
+                timedRefresh();
+            }
+        }
     }
 );
 
 //Sometimes the sound sounds kind of wobbly and this often fixes it
-setTimeout( function() { init(); }, 500 );
-
-setTimeout( function() {
-    if( nightcorerOnOff ) {
-        turnOff();
-        turnOn();
-    }
-}, 3000 );
+setTimeout( init, 500 );
+setTimeout( timedRefresh, 3000 );

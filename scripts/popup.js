@@ -15,6 +15,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             rangeSlider.value = nightcorerSpeed;
             speedIndicator.value = parseFloat( nightcorerSpeed ).toFixed(2);
 
+
             //Send the onoff value when changed to content
             onoff.addEventListener( 'change', function( e ) {
                 var on = this.checked;
@@ -50,6 +51,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                     speedIndicator.value = previousSpeedVal;
                 }
             });
+            //With various rules to make inputting text more intuitive
             speedIndicator.addEventListener( 'input', function( e ) {
                 var newSpeed = this.value;
                 if( newSpeed.length == 1 ) {
